@@ -1,0 +1,2 @@
+Hello!
+This file is a test file for the "files" directory when the project is real - user files will be uploaded here.
