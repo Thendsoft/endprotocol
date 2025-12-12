@@ -34,8 +34,9 @@ EndProtocol is designed to be easily deployed on any standard web server running
 
 1.  **Clone the Repository (or Download):**
     ```bash
-    git clone https://github.com/Thendsoft/endprotocol/tree/main/source
+    git clone https://github.com/Thendsoft/endprotocol
     cd endprotocol
+    cd source
     ```
 
 2.  **Upload Files:**
