@@ -62,9 +62,3 @@ The main settings for the backend are located at the top of `upload.php`. You ca
 | `$allowedExtensions` | Array of file extensions allowed for upload. | `['jpg', 'jpeg', 'png', 'gif', ...]` |
 | `$blockedExtensions` | Array of extensions strictly forbidden (e.g., all scripting files). **Do not remove these.** | `['php', 'exe', 'sh', 'bat', ...]` |
 | `$maxFileSize` | Maximum size allowed for a single file upload. | `100 * 1024 * 1024` (100 MB) |
-
-## 📜 License
-
-This project is released under the **TPL - ThinkPublic License**.
-
-This license encourages modification, distribution, and commercial use while requiring clear attribution to the original EndProtocol project and Thendsoft, ensuring the source remains open for the community. Please see the license file (if provided) for full details.
