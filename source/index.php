@@ -6,10 +6,11 @@
     <title>EndProtocol - Open Source File Share</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables for easy theme modification*/
         :root {
             --bg-dark: #1e1e1e; /* Dark theme base */
-            --accent: #007bff; /* Standard blue for links/actions*/
-            --accent-glow: rgba(0, 123, 255, 0.4);
+            --accent: #FF4444;
+            --accent-glow: rgba(255, 68, 68, 0.4);
             --card-bg: #2d2d2d;
             --border-color: #444;
             --text-main: #e0e0e0;
@@ -75,7 +76,7 @@
         
         .drop-zone.active {
             border-color: var(--accent);
-            background: rgba(0, 123, 255, 0.1);
+            background: rgba(255, 68, 68, 0.1); /* Adjusted for red accent */
         }
 
         .icon-box {
@@ -184,8 +185,9 @@
             text-decoration: none; 
             transition: color 0.3s; 
             font-weight: 500;
+            margin: 0 5px;
         }
-        .footer a:hover { color: #88aaff; }
+        .footer a:hover { color: #ff7b7b; }
 
         /* --- Toasts (Notifications) --- */
         .toast-container {
@@ -230,7 +232,7 @@
 
     <div class="card">
         <div class="logo">End<span>Protocol</span></div>
-        <div class="tagline">An Open Source File Sharing Base (by Thendsoft)</div>
+        <div class="tagline">An Open Source File Sharing Base</div>
 
         <div class="drop-zone" id="dropZone">
             <svg class="icon-box" viewBox="0 0 24 24">
@@ -257,7 +259,7 @@
     </div>
 
     <div class="footer">
-        Based on EndProtocol &bull; Initial code by <a href="https://thendsoft.su" target="_blank">Thendsoft</a> &copy; <?php echo date('Y'); ?>
+        Based on EndProtocol &bull; Code on <a href="https://github.com/Thendsoft/endprotocol" target="_blank">GitHub</a> &bull; Initial code by <a href="https://thendsoft.su" target="_blank">Thendsoft</a> &copy; <?php echo date('Y'); ?>
     </div>
 
     <div class="toast-container" id="toastContainer"></div>
@@ -337,7 +339,7 @@
                     if (blob.type.startsWith('image/')) {
                         // Create a synthetic File object for upload
                         const file = new File([blob], "pasted_image." + blob.type.split('/')[1], { type: blob.type });
-                        uploadFile(file, true); // Pass 'true' for Base64 mode if needed, but for FormData we don't need it.
+                        uploadFile(file);
                     } else {
                         showToast('Pasted content is not a supported image.', 'error');
                     }
@@ -355,11 +357,6 @@
             showToast(`Uploading: ${file.name.substring(0, 30)}...`);
 
             const formData = new FormData();
-            
-            // Check if the file is a standard file or a pasted image (needs Base64 conversion for older server logic)
-            // For simplicity and compatibility, we will always use the 'file' input for now.
-            // Note: If you want to use the Base64 logic from upload.php, you need to modify this part to check file type
-            // and use POST['base64_image'] for images.
             formData.append('file', file);
 
 
@@ -429,8 +426,12 @@
                 
                 // Visual feedback
                 urlInput.select();
-                linkGroup.style.borderColor = varCss('--success-color'); // Green border
-                setTimeout(() => linkGroup.style.borderColor = varCss('--border-color'), 500);
+                // Use a standard CSS property for color retrieval
+                const successColor = getComputedStyle(document.documentElement).getPropertyValue('--success-color').trim();
+                const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim();
+                
+                linkGroup.style.borderColor = successColor; // Green border
+                setTimeout(() => linkGroup.style.borderColor = borderColor, 500);
 
                 if (!silent) showToast('Link copied to clipboard!', 'success');
             } catch (err) {
@@ -439,11 +440,6 @@
                 document.execCommand('copy');
                 showToast('Link copied (fallback method)', 'success');
             }
-        }
-
-        /** Helper to get CSS variable value in JS **/
-        function varCss(name) {
-            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
     </script>
 </body>
